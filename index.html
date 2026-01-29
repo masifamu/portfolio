@@ -71,39 +71,11 @@
       align-items: center;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
     .hero p {
       max-width: 720px;
       margin-top: 1.6rem;
       color: var(--muted);
       font-size: 1.1rem;
-    }
-
-    .hero-image {
-      display: flex;
-      justify-content: center;
-    }
-
-    .hero-image img {
-      width: 100%;
-      max-width: 340px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-    }
-
-    @media (max-width: 900px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
     }
 
     /* BUTTONS */
@@ -131,6 +103,81 @@
       border: none;
     }
 
+    /* AUDIO INTRO */
+    .audio-intro {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.2rem 1.5rem;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
+      border: 1px solid rgba(255,255,255,0.08);
+      max-width: 520px;
+    }
+
+    .audio-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #001014;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 0 rgba(0,229,255,0.6);
+    }
+
+    .audio-btn.playing {
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0,229,255,0.6); }
+      70% { box-shadow: 0 0 0 18px rgba(0,229,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,229,255,0); }
+    }
+
+    .audio-info strong {
+      font-size: 0.95rem;
+    }
+
+    .audio-info span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .audio-bars {
+      display: flex;
+      gap: 4px;
+      height: 26px;
+      margin-top: 6px;
+    }
+
+    .audio-bars span {
+      width: 4px;
+      background: var(--accent-dim);
+      border-radius: 4px;
+      animation: bounce 1s infinite ease-in-out;
+      animation-play-state: paused;
+    }
+
+    .audio-bars span:nth-child(2){animation-delay:.1s}
+    .audio-bars span:nth-child(3){animation-delay:.2s}
+    .audio-bars span:nth-child(4){animation-delay:.3s}
+    .audio-bars span:nth-child(5){animation-delay:.4s}
+
+    @keyframes bounce {
+      0%,100%{height:20%}
+      50%{height:100%}
+    }
+
+    .audio-playing .audio-bars span {
+      animation-play-state: running;
+    }
+
     /* GRID / CARDS */
     .grid {
       display: grid;
@@ -143,25 +190,10 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 14px;
       padding: 1.6rem;
-      transition: transform 0.3s ease, border-color 0.3s ease;
       cursor: pointer;
     }
 
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent-dim);
-    }
-
     .card p { color: var(--muted); font-size: 0.95rem; }
-
-    .card-image {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
 
     .tags {
       margin-top: 1rem;
@@ -218,7 +250,6 @@
       max-width: 720px;
       width: 90%;
       padding: 2rem;
-      border: 1px solid rgba(255,255,255,0.08);
     }
 
     footer {
@@ -229,7 +260,6 @@
       font-size: 0.9rem;
     }
 
-    /* REVEAL */
     .reveal { opacity: 0; transform: translateY(40px); }
     .reveal.active {
       opacity: 1;
@@ -256,32 +286,36 @@
 
 <section class="hero reveal">
   <div>
-    <div>
-      <h1>Building <span class="accent">Safety-Critical & Real-Time</span><br/>Embedded Systems</h1>
-      <p>
-        Senior Embedded Systems Engineer with 7+ years of experience delivering
-        production-grade firmware and system architectures for automotive,
-        industrial, and connected devices.
-      </p>
-      <div class="cta">
-        <a href="#projects" class="btn primary">View Projects</a>
-        <a href="#contact" class="btn">Download CV</a>
-      </div>
+    <h1>Building <span class="accent">Safety-Critical & Real-Time</span><br>Embedded Systems</h1>
+    <p>
+      Senior Embedded Systems Engineer with 7+ years of experience delivering
+      production-grade firmware and system architectures.
+    </p>
+    <div class="cta">
+      <a href="#projects" class="btn primary">View Projects</a>
+      <a href="#contact" class="btn">Download CV</a>
     </div>
-
-    <!-- <div class="hero-image">
-      <img src="profile.png" alt="Senior Embedded Systems Engineer">
-    </div> -->
   </div>
 </section>
 
 <section id="about" class="reveal">
   <h2>Professional Summary</h2>
   <p>
-    Expert in low-level firmware, RTOS-based systems, and hardware–software
-    co-design. Proven track record in board bring-up, real-time scheduling,
-    communication stacks, and compliance-driven development (MISRA, ISO 26262).
+    Expert in low-level firmware, RTOS-based systems, and compliance-driven
+    development (MISRA, ISO 26262).
   </p>
+
+  <div class="audio-intro" id="audioIntro">
+    <button class="audio-btn" id="audioBtn">▶</button>
+    <div class="audio-info">
+      <strong>Listen to my professional introduction</strong>
+      <span>~45 seconds · Audio overview</span>
+      <div class="audio-bars">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <audio id="introAudio" src="intro.mp3"></audio>
+  </div>
 </section>
 
 <section id="experience" class="reveal">
@@ -290,12 +324,10 @@
     <div class="timeline-item">
       <h3>Senior Embedded Engineer</h3>
       <p>Automotive & Industrial Systems (2019–Present)</p>
-      <p class="muted">Led firmware architecture, safety compliance, and performance optimization.</p>
     </div>
     <div class="timeline-item">
       <h3>Embedded Systems Engineer</h3>
       <p>IoT & Edge Devices (2016–2019)</p>
-      <p class="muted">Developed low-power firmware and connectivity stacks.</p>
     </div>
   </div>
 </section>
@@ -303,56 +335,15 @@
 <section id="projects" class="reveal">
   <h2>Key Projects</h2>
   <div class="grid">
-    <div class="card" onclick="openModal('project1')">
-      <!-- <img src="ecu.png" class="card-image" alt="Automotive ECU"> -->
+    <div class="card" onclick="openModal('p1')">
       <h3>Automotive ECU Firmware</h3>
-      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
-      <div class="tags">
-        <span class="tag">AUTOSAR</span>
-        <span class="tag">CAN</span>
-        <span class="tag">ISO 26262</span>
-      </div>
+      <p>Safety-critical real-time firmware.</p>
+      <div class="tags"><span class="tag">AUTOSAR</span><span class="tag">ISO 26262</span></div>
     </div>
-
-    <div class="card" onclick="openModal('project3')">
-      <!-- <img src="profile1.png" class="card-image" alt="Automotive ECU"> -->
-      <h3>GPS Tracker</h3>
-      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
-      <div class="tags">
-        <span class="tag">AUTOSAR</span>
-        <span class="tag">CAN</span>
-        <span class="tag">ISO 26262</span>
-      </div>
-    </div>
-    <div class="card" onclick="openModal('project4')">
-      <!-- <img src="profile1.png" class="card-image" alt="Automotive ECU"> -->
-      <h3>GPS Tracker</h3>
-      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
-      <div class="tags">
-        <span class="tag">AUTOSAR</span>
-        <span class="tag">CAN</span>
-        <span class="tag">ISO 26262</span>
-      </div>
-    </div>
-    <div class="card" onclick="openModal('project5')">
-      <!-- <img src="profile1.png" class="card-image" alt="Automotive ECU"> -->
-      <h3>GPS Tracker</h3>
-      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
-      <div class="tags">
-        <span class="tag">AUTOSAR</span>
-        <span class="tag">CAN</span>
-        <span class="tag">ISO 26262</span>
-      </div>
-    </div>
-
-    <div class="card" onclick="openModal('project2')">
-      <!-- <img src="gateway.png" class="card-image" alt="Industrial IoT Gateway"> -->
+    <div class="card" onclick="openModal('p2')">
       <h3>Industrial IoT Gateway</h3>
-      <p>Secure embedded Linux gateway with OTA and cloud integration.</p>
-      <div class="tags">
-        <span class="tag">Embedded Linux</span>
-        <span class="tag">MQTT</span>
-      </div>
+      <p>Secure embedded Linux gateway.</p>
+      <div class="tags"><span class="tag">Linux</span><span class="tag">MQTT</span></div>
     </div>
   </div>
 </section>
@@ -360,11 +351,7 @@
 <section id="research" class="reveal">
   <h2>Research & Publications</h2>
   <div class="card">
-    <p>
-      Published peer-reviewed papers on real-time scheduling, fault-tolerant
-      embedded architectures, and energy-efficient systems.
-    </p>
-    <p class="muted">IEEE · ACM · Springer</p>
+    <p>Published peer-reviewed work in IEEE, ACM, Springer.</p>
   </div>
 </section>
 
@@ -382,54 +369,52 @@
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
     <p id="modalBody"></p>
-    <div class="cta">
-      <a class="btn" onclick="closeModal()">Close</a>
-    </div>
+    <div class="cta"><button class="btn" onclick="closeModal()">Close</button></div>
   </div>
 </div>
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('active');
-    });
+    entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
   }, { threshold: 0.15 });
-
   reveals.forEach(r => observer.observe(r));
 
   const modalData = {
-    project1: {
-      title: 'Automotive ECU Firmware',
-      body: 'Designed and implemented real-time firmware for an automotive ECU including diagnostics, fault handling, and ISO 26262 compliance.'
-    },
-    project2: {
-      title: 'Industrial IoT Gateway',
-      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
-    },
-    project3: {
-      title: 'Industrial IoT Gateway',
-      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
-    },
-    project4: {
-      title: 'Industrial IoT Gateway',
-      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
-    },
-    project5: {
-      title: 'Industrial IoT Gateway',
-      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
+    p1:{title:"Automotive ECU Firmware",body:"Real-time ECU firmware with diagnostics and safety compliance."},
+    p2:{title:"Industrial IoT Gateway",body:"Secure embedded Linux gateway with OTA and cloud integration."}
+  };
+
+  function openModal(k){
+    modal.style.display='flex';
+    modalTitle.innerText=modalData[k].title;
+    modalBody.innerText=modalData[k].body;
+  }
+  function closeModal(){ modal.style.display='none'; }
+
+  const audio = document.getElementById('introAudio');
+  const btn = document.getElementById('audioBtn');
+  const wrap = document.getElementById('audioIntro');
+
+  btn.onclick = () => {
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '❚❚';
+      btn.classList.add('playing');
+      wrap.classList.add('audio-playing');
+    } else {
+      audio.pause();
+      btn.textContent = '▶';
+      btn.classList.remove('playing');
+      wrap.classList.remove('audio-playing');
     }
   };
 
-  function openModal(key) {
-    document.getElementById('modalTitle').innerText = modalData[key].title;
-    document.getElementById('modalBody').innerText = modalData[key].body;
-    document.getElementById('modal').style.display = 'flex';
-  }
-
-  function closeModal() {
-    document.getElementById('modal').style.display = 'none';
-  }
+  audio.onended = () => {
+    btn.textContent = '▶';
+    btn.classList.remove('playing');
+    wrap.classList.remove('audio-playing');
+  };
 </script>
 
 </body>
