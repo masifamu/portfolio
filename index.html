@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Embedded Systems Engineer | Portfolio</title>
+  <title>Senior Embedded Systems Engineer | Portfolio</title>
   <style>
     :root {
       --bg: #0b0f14;
-      --card: #121824;
+      --panel: #121a27;
       --accent: #00e5ff;
-      --accent-soft: rgba(0,229,255,0.15);
+      --accent-dim: rgba(0,229,255,0.15);
       --text: #e6e9ef;
       --muted: #9aa4b2;
     }
@@ -18,44 +18,50 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: Inter, system-ui, sans-serif;
       background: radial-gradient(1200px 600px at 20% -10%, #0f172a, transparent), var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     header {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      inset: 0 0 auto 0;
       backdrop-filter: blur(10px);
-      background: rgba(11,15,20,0.7);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(11,15,20,0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       z-index: 100;
     }
 
     .nav {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: auto;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 1rem 1.5rem;
     }
 
     .nav a {
       color: var(--muted);
       text-decoration: none;
-      margin-left: 1.2rem;
+      margin-left: 1.4rem;
       font-size: 0.95rem;
     }
 
     .nav a:hover { color: var(--accent); }
 
     section {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: auto;
       padding: 6rem 1.5rem 4rem;
     }
+
+    h1 { font-size: clamp(2.6rem, 5vw, 4.2rem); line-height: 1.1; }
+    h2 { font-size: 2.1rem; margin-bottom: 1.5rem; }
+    h3 { margin-bottom: 0.4rem; }
+
+    .accent { color: var(--accent); }
 
     .hero {
       min-height: 100vh;
@@ -63,32 +69,25 @@
       align-items: center;
     }
 
-    .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1;
-    }
-
-    .hero span { color: var(--accent); }
-
     .hero p {
-      max-width: 650px;
-      margin-top: 1.5rem;
+      max-width: 720px;
+      margin-top: 1.6rem;
       color: var(--muted);
       font-size: 1.1rem;
     }
 
-    .hero .cta {
-      margin-top: 2.5rem;
+    .cta {
+      margin-top: 2.6rem;
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
 
     .btn {
-      padding: 0.8rem 1.4rem;
-      border-radius: 6px;
-      border: 1px solid var(--accent-soft);
-      background: linear-gradient(180deg, var(--accent-soft), transparent);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--accent-dim);
+      background: linear-gradient(180deg, var(--accent-dim), transparent);
       color: var(--accent);
       text-decoration: none;
       font-weight: 500;
@@ -100,66 +99,103 @@
       border: none;
     }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
     .grid {
       display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.6rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
     .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 1.5rem;
+      border-radius: 14px;
+      padding: 1.6rem;
       transition: transform 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
     }
 
     .card:hover {
       transform: translateY(-6px);
-      border-color: var(--accent-soft);
+      border-color: var(--accent-dim);
     }
 
-    .card h3 { margin-bottom: 0.5rem; }
     .card p { color: var(--muted); font-size: 0.95rem; }
 
     .tags {
       margin-top: 1rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
 
     .tag {
       font-size: 0.75rem;
-      padding: 0.25rem 0.5rem;
+      padding: 0.25rem 0.55rem;
       border-radius: 999px;
-      background: var(--accent-soft);
+      background: var(--accent-dim);
       color: var(--accent);
     }
 
+    /* Timeline */
+    .timeline {
+      border-left: 2px solid var(--accent-dim);
+      padding-left: 1.5rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      margin-left: -2.1rem;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .timeline-item { position: relative; }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    .modal-content {
+      background: var(--panel);
+      border-radius: 16px;
+      max-width: 720px;
+      width: 90%;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .modal h3 { margin-bottom: 1rem; }
+
     footer {
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255,255,255,0.06);
       padding: 2rem 1.5rem;
       text-align: center;
       color: var(--muted);
       font-size: 0.9rem;
     }
 
-    /* Reveal animation */
+    /* Reveal */
     .reveal { opacity: 0; transform: translateY(40px); }
-    .reveal.active { opacity: 1; transform: translateY(0); transition: all 0.8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); transition: all 0.9s ease; }
   </style>
 </head>
 <body>
 
 <header>
   <div class="nav">
-    <strong>Embedded Engineer</strong>
+    <strong>Senior Embedded Engineer</strong>
     <nav>
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
@@ -170,73 +206,58 @@
   </div>
 </header>
 
-<section class="hero">
-  <div class="reveal">
-    <h1>Designing <span>Reliable Embedded Systems</span><br/>for the Real World</h1>
+<section class="hero reveal">
+  <div>
+    <h1>Building <span class="accent">Safety‑Critical & Real‑Time</span><br/>Embedded Systems</h1>
     <p>
-      Embedded Systems Engineer with 7+ years of experience designing, optimizing,
-      and deploying firmware and hardware-software solutions across automotive,
-      industrial, and IoT domains.
+      Senior Embedded Systems Engineer with 7+ years of experience delivering
+      production-grade firmware and system architectures for automotive,
+      industrial, and connected devices.
     </p>
     <div class="cta">
       <a href="#projects" class="btn primary">View Projects</a>
-      <a href="#contact" class="btn">Get in Touch</a>
+      <a href="#contact" class="btn">Download CV</a>
     </div>
   </div>
 </section>
 
 <section id="about" class="reveal">
-  <h2>About Me</h2>
+  <h2>Professional Summary</h2>
   <p>
-    I specialize in low-level firmware, RTOS-based architectures, and
-    performance-critical embedded systems. My work spans microcontroller
-    programming, board bring-up, communication protocols, and system validation
-    in safety- and reliability-focused environments.
+    Expert in low-level firmware, RTOS-based systems, and hardware–software
+    co-design. Proven track record in board bring-up, real-time scheduling,
+    communication stacks, and compliance-driven development (MISRA, ISO 26262).
   </p>
 </section>
 
 <section id="experience" class="reveal">
-  <h2>Experience</h2>
-  <div class="grid">
-    <div class="card">
+  <h2>Experience Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item">
       <h3>Senior Embedded Engineer</h3>
-      <p>7+ years across automotive, industrial automation, and IoT products.</p>
-      <div class="tags">
-        <span class="tag">C / C++</span>
-        <span class="tag">RTOS</span>
-        <span class="tag">Bare Metal</span>
-        <span class="tag">Safety-Critical</span>
-      </div>
+      <p>Automotive & Industrial Systems (2019–Present)</p>
+      <p class="muted">Led firmware architecture, safety compliance, and performance optimization.</p>
     </div>
-    <div class="card">
-      <h3>Hardware–Software Integration</h3>
-      <p>Board bring-up, debugging, and performance optimization.</p>
-      <div class="tags">
-        <span class="tag">ARM Cortex-M</span>
-        <span class="tag">SPI / I2C / UART</span>
-        <span class="tag">CAN</span>
-      </div>
+    <div class="timeline-item">
+      <h3>Embedded Systems Engineer</h3>
+      <p>IoT & Edge Devices (2016–2019)</p>
+      <p class="muted">Developed low-power firmware and connectivity stacks.</p>
     </div>
   </div>
 </section>
 
 <section id="projects" class="reveal">
-  <h2>Selected Projects</h2>
+  <h2>Key Projects</h2>
   <div class="grid">
-    <div class="card">
-      <h3>Automotive Control Module</h3>
-      <p>Developed real-time firmware for a safety-critical ECU with CAN-based diagnostics.</p>
-      <div class="tags"><span class="tag">AUTOSAR</span><span class="tag">CAN</span></div>
+    <div class="card" onclick="openModal('project1')">
+      <h3>Automotive ECU Firmware</h3>
+      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
+      <div class="tags"><span class="tag">AUTOSAR</span><span class="tag">CAN</span><span class="tag">ISO 26262</span></div>
     </div>
-    <div class="card">
+    <div class="card" onclick="openModal('project2')">
       <h3>Industrial IoT Gateway</h3>
-      <p>Secure embedded Linux gateway with OTA updates and cloud connectivity.</p>
+      <p>Secure embedded Linux gateway with OTA and cloud integration.</p>
       <div class="tags"><span class="tag">Embedded Linux</span><span class="tag">MQTT</span></div>
-    </div>
-    <div class="card">
-      <h3>Low-Power Sensor Node</h3>
-      <p>Ultra-low power firmware achieving multi-year battery life.</p>
-      <div class="tags"><span class="tag">Low Power</span><span class="tag">BLE</span></div>
     </div>
   </div>
 </section>
@@ -245,31 +266,59 @@
   <h2>Research & Publications</h2>
   <div class="card">
     <p>
-      Author of peer-reviewed research papers in embedded optimization,
-      real-time scheduling, and fault-tolerant systems.
+      Published peer-reviewed papers on real-time scheduling, fault-tolerant
+      embedded architectures, and energy-efficient systems.
     </p>
+    <p class="muted">IEEE, ACM, Springer</p>
   </div>
 </section>
 
 <section id="contact" class="reveal">
   <h2>Contact</h2>
   <p>Email: yourname@email.com</p>
-  <p>LinkedIn | GitHub | Google Scholar</p>
+  <p>LinkedIn · GitHub · Google Scholar</p>
 </section>
 
 <footer>
-  © 2026 Embedded Systems Engineer Portfolio
+  © 2026 Senior Embedded Systems Engineer Portfolio
 </footer>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p id="modalBody"></p>
+    <div class="cta"><a class="btn" onclick="closeModal()">Close</a></div>
+  </div>
+</div>
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('active');
-    });
+    entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('active'));
   }, { threshold: 0.15 });
-
   reveals.forEach(r => observer.observe(r));
+
+  const modalData = {
+    project1: {
+      title: 'Automotive ECU Firmware',
+      body: 'Designed and implemented real-time firmware for an automotive ECU including diagnostics, fault handling, and compliance with ISO 26262.'
+    },
+    project2: {
+      title: 'Industrial IoT Gateway',
+      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
+    }
+  };
+
+  function openModal(key) {
+    document.getElementById('modalTitle').innerText = modalData[key].title;
+    document.getElementById('modalBody').innerText = modalData[key].body;
+    document.getElementById('modal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
 </script>
 
 </body>
