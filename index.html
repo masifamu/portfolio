@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Senior Embedded Systems Engineer | Portfolio</title>
+
   <style>
     :root {
       --bg: #0b0f14;
@@ -63,9 +64,17 @@
 
     .accent { color: var(--accent); }
 
+    /* HERO */
     .hero {
       min-height: 100vh;
       display: grid;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
       align-items: center;
     }
 
@@ -76,6 +85,28 @@
       font-size: 1.1rem;
     }
 
+    .hero-image {
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 340px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    /* BUTTONS */
     .cta {
       margin-top: 2.6rem;
       display: flex;
@@ -91,6 +122,7 @@
       color: var(--accent);
       text-decoration: none;
       font-weight: 500;
+      cursor: pointer;
     }
 
     .btn.primary {
@@ -99,6 +131,7 @@
       border: none;
     }
 
+    /* GRID / CARDS */
     .grid {
       display: grid;
       gap: 1.6rem;
@@ -121,6 +154,15 @@
 
     .card p { color: var(--muted); font-size: 0.95rem; }
 
+    .card-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
     .tags {
       margin-top: 1rem;
       display: flex;
@@ -136,7 +178,7 @@
       color: var(--accent);
     }
 
-    /* Timeline */
+    /* TIMELINE */
     .timeline {
       border-left: 2px solid var(--accent-dim);
       padding-left: 1.5rem;
@@ -144,19 +186,22 @@
       gap: 2rem;
     }
 
+    .timeline-item {
+      position: relative;
+    }
+
     .timeline-item::before {
       content: "";
       position: absolute;
-      margin-left: -2.1rem;
+      left: -2.1rem;
+      top: 0.4rem;
       width: 12px;
       height: 12px;
       background: var(--accent);
       border-radius: 50%;
     }
 
-    .timeline-item { position: relative; }
-
-    /* Modal */
+    /* MODAL */
     .modal {
       position: fixed;
       inset: 0;
@@ -176,8 +221,6 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .modal h3 { margin-bottom: 1rem; }
-
     footer {
       border-top: 1px solid rgba(255,255,255,0.06);
       padding: 2rem 1.5rem;
@@ -186,11 +229,16 @@
       font-size: 0.9rem;
     }
 
-    /* Reveal */
+    /* REVEAL */
     .reveal { opacity: 0; transform: translateY(40px); }
-    .reveal.active { opacity: 1; transform: translateY(0); transition: all 0.9s ease; }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.9s ease;
+    }
   </style>
 </head>
+
 <body>
 
 <header>
@@ -208,16 +256,22 @@
 
 <section class="hero reveal">
   <div>
-    <h1>Building <span class="accent">Safety‑Critical & Real‑Time</span><br/>Embedded Systems</h1>
-    <p>
-      Senior Embedded Systems Engineer with 7+ years of experience delivering
-      production-grade firmware and system architectures for automotive,
-      industrial, and connected devices.
-    </p>
-    <div class="cta">
-      <a href="#projects" class="btn primary">View Projects</a>
-      <a href="#contact" class="btn">Download CV</a>
+    <div>
+      <h1>Building <span class="accent">Safety-Critical & Real-Time</span><br/>Embedded Systems</h1>
+      <p>
+        Senior Embedded Systems Engineer with 7+ years of experience delivering
+        production-grade firmware and system architectures for automotive,
+        industrial, and connected devices.
+      </p>
+      <div class="cta">
+        <a href="#projects" class="btn primary">View Projects</a>
+        <a href="#contact" class="btn">Download CV</a>
+      </div>
     </div>
+
+    <!-- <div class="hero-image">
+      <img src="profile.png" alt="Senior Embedded Systems Engineer">
+    </div> -->
   </div>
 </section>
 
@@ -250,14 +304,55 @@
   <h2>Key Projects</h2>
   <div class="grid">
     <div class="card" onclick="openModal('project1')">
+      <!-- <img src="ecu.png" class="card-image" alt="Automotive ECU"> -->
       <h3>Automotive ECU Firmware</h3>
       <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
-      <div class="tags"><span class="tag">AUTOSAR</span><span class="tag">CAN</span><span class="tag">ISO 26262</span></div>
+      <div class="tags">
+        <span class="tag">AUTOSAR</span>
+        <span class="tag">CAN</span>
+        <span class="tag">ISO 26262</span>
+      </div>
     </div>
+
+    <div class="card" onclick="openModal('project3')">
+      <!-- <img src="profile1.png" class="card-image" alt="Automotive ECU"> -->
+      <h3>GPS Tracker</h3>
+      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
+      <div class="tags">
+        <span class="tag">AUTOSAR</span>
+        <span class="tag">CAN</span>
+        <span class="tag">ISO 26262</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('project4')">
+      <!-- <img src="profile1.png" class="card-image" alt="Automotive ECU"> -->
+      <h3>GPS Tracker</h3>
+      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
+      <div class="tags">
+        <span class="tag">AUTOSAR</span>
+        <span class="tag">CAN</span>
+        <span class="tag">ISO 26262</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('project5')">
+      <!-- <img src="profile1.png" class="card-image" alt="Automotive ECU"> -->
+      <h3>GPS Tracker</h3>
+      <p>Safety-critical real-time firmware with diagnostics and fault handling.</p>
+      <div class="tags">
+        <span class="tag">AUTOSAR</span>
+        <span class="tag">CAN</span>
+        <span class="tag">ISO 26262</span>
+      </div>
+    </div>
+
     <div class="card" onclick="openModal('project2')">
+      <!-- <img src="gateway.png" class="card-image" alt="Industrial IoT Gateway"> -->
       <h3>Industrial IoT Gateway</h3>
       <p>Secure embedded Linux gateway with OTA and cloud integration.</p>
-      <div class="tags"><span class="tag">Embedded Linux</span><span class="tag">MQTT</span></div>
+      <div class="tags">
+        <span class="tag">Embedded Linux</span>
+        <span class="tag">MQTT</span>
+      </div>
     </div>
   </div>
 </section>
@@ -269,7 +364,7 @@
       Published peer-reviewed papers on real-time scheduling, fault-tolerant
       embedded architectures, and energy-efficient systems.
     </p>
-    <p class="muted">IEEE, ACM, Springer</p>
+    <p class="muted">IEEE · ACM · Springer</p>
   </div>
 </section>
 
@@ -283,28 +378,44 @@
   © 2026 Senior Embedded Systems Engineer Portfolio
 </footer>
 
-<!-- Modal -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
     <p id="modalBody"></p>
-    <div class="cta"><a class="btn" onclick="closeModal()">Close</a></div>
+    <div class="cta">
+      <a class="btn" onclick="closeModal()">Close</a>
+    </div>
   </div>
 </div>
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('active'));
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('active');
+    });
   }, { threshold: 0.15 });
+
   reveals.forEach(r => observer.observe(r));
 
   const modalData = {
     project1: {
       title: 'Automotive ECU Firmware',
-      body: 'Designed and implemented real-time firmware for an automotive ECU including diagnostics, fault handling, and compliance with ISO 26262.'
+      body: 'Designed and implemented real-time firmware for an automotive ECU including diagnostics, fault handling, and ISO 26262 compliance.'
     },
     project2: {
+      title: 'Industrial IoT Gateway',
+      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
+    },
+    project3: {
+      title: 'Industrial IoT Gateway',
+      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
+    },
+    project4: {
+      title: 'Industrial IoT Gateway',
+      body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
+    },
+    project5: {
       title: 'Industrial IoT Gateway',
       body: 'Developed secure embedded Linux gateway supporting OTA updates, MQTT, and remote fleet management.'
     }
