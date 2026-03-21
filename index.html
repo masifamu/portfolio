@@ -549,6 +549,88 @@
       margin-top: 2rem;
       flex-wrap: wrap;
     }
+
+    /* Speed control bar */
+    .anim-speed-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .anim-speed-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: 0.1em;
+    }
+
+    .anim-speed-icon { font-size: 0.85rem; }
+
+    .anim-speed-track {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .anim-speed-tick {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--dim);
+    }
+
+    /* Slider — cross-browser styled */
+    #animSpeedSlider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 160px;
+      height: 4px;
+      border-radius: 4px;
+      background: var(--dim);
+      outline: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    #animSpeedSlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    #animSpeedSlider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+      border: none;
+      cursor: pointer;
+    }
+
+    #animSpeedSlider:hover::-webkit-slider-thumb {
+      box-shadow: 0 0 14px var(--accent);
+      transform: scale(1.15);
+    }
+
+    .anim-speed-val {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      min-width: 2.4rem;
+      font-weight: 600;
+    }
     .int-label {
       font-family: var(--mono);
       font-size: 0.72rem;
@@ -1181,6 +1263,27 @@
       <span class="int-label pcb">PCB Hardware Layer</span>
       <span class="int-label fw">Firmware Software Layer</span>
       <span class="int-label case">Plastic Enclosure Layer</span>
+    </div>
+
+    <div class="anim-speed-bar reveal">
+      <span class="anim-speed-label">
+        <span class="anim-speed-icon">⏱</span>
+        Animation Speed
+      </span>
+      <div class="anim-speed-track">
+        <span class="anim-speed-tick">0.01×</span>
+        <input
+          type="range"
+          id="animSpeedSlider"
+          min="0.01"
+          max="5"
+          step="0.01"
+          value="1"
+          oninput="setAnimSpeed(this.value)"
+        />
+        <span class="anim-speed-tick">5×</span>
+      </div>
+      <span class="anim-speed-val" id="animSpeedVal">1×</span>
     </div>
   </div>
 </section>
@@ -2083,7 +2186,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
   }
 
   // ── Phase config ────────────────────────────────────
-  const PHASE_LEN = 300;   // frames per phase  (~5s @60fps)
+  let PHASE_LEN = 300;   // frames per phase — controlled by #animSpeedSlider
   const NUM_PHASES = 4;
   const PHASES = [
     { label:'PCB DESIGN',          color:'#00d2b4' },
@@ -2875,33 +2978,55 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
   }
 
   // ═══════════════════════════════════════════════════
-  //  MAIN LOOP
+  //  MAIN LOOP  — speed-aware
+  //  frameRef advances by `animStepSize` each RAF tick.
+  //  Slider maps: 0.5× → step 0.5, 1× → 1, 2× → 2, etc.
   // ═══════════════════════════════════════════════════
+  let animStepSize = 1;   // controlled by slider
+
   function draw(){
     ctx.clearRect(0,0,PW,PH);
     ctx.save();
-    ctx.scale(SX, SY);   // scale logical 480×480 → physical PW×PH
+    ctx.scale(SX, SY);
 
-    const f=window.frameRef;
-    const total=PHASE_LEN*NUM_PHASES;
-    const cycle=f%total;
-    const curPhase=Math.floor(cycle/PHASE_LEN);
-    const phaseP2=(cycle%PHASE_LEN)/PHASE_LEN;
+    const f = window.frameRef;
+    const total = PHASE_LEN * NUM_PHASES;
+    const cycle = f % total;
+    const curPhase = Math.floor(cycle / PHASE_LEN);
+    const phaseP2  = (cycle % PHASE_LEN) / PHASE_LEN;
 
     switch(curPhase){
       case 0: drawPCB(phaseP2); break;
-      case 1: drawFirmware(phaseP2,f); break;
+      case 1: drawFirmware(phaseP2, f); break;
       case 2: drawEnclosure(phaseP2); break;
-      case 3: drawProduct(phaseP2,f); break;
+      case 3: drawProduct(phaseP2, f); break;
     }
 
     drawUI(curPhase, phaseP2);
     ctx.restore();
-    window.frameRef++;
+    window.frameRef = (window.frameRef + animStepSize) % total;
     requestAnimationFrame(draw);
   }
 
   draw();
+
+  // ── Exposed to the slider's oninput ─────────────────
+  window.setAnimSpeed = function(val){
+    animStepSize = parseFloat(val);
+    const label = document.getElementById('animSpeedVal');
+    if(label) label.textContent = parseFloat(val) + '×';
+    // Update slider gradient fill to show progress
+    const slider = document.getElementById('animSpeedSlider');
+    if(slider){
+      const pct = ((val - 0.01) / (5 - 0.01)) * 100;
+      slider.style.background =
+        `linear-gradient(to right, var(--accent) ${pct}%, var(--dim) ${pct}%)`;
+    }
+  };
+
+  // Set initial gradient on load
+  window.addEventListener('load', ()=> window.setAnimSpeed(1));
+
 })();
 </script>
 
